@@ -1,5 +1,5 @@
 import pymongo
-import datetime
+from datetime import datetime
 from time import sleep
 from pandas import Timestamp
 import pandas as pd
@@ -9,7 +9,7 @@ class StockData:
 
     def __init__(self):
         self.clientObj = MongoDB()
-        self.clientDB = self.clientObj.db
+        self.clientDB = self.clientObj.stockDB
 
     def getExtendedTimeSeries(self, symbol, interval, stockSlice, adjusted, apiKey):
         #'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY_EXTENDED&symbol=IBM&interval=60min&slice=year1month3&adjusted=false&apikey=demo'
@@ -20,7 +20,7 @@ class StockData:
             return None
 
         data = pd.read_csv(api)
-        data['time'] = data['time'].apply( lambda x: datetime.datetime.strptime(x, "%Y-%m-%d %H:%M:%S"))
+        data['time'] = data['time'].apply( lambda x: datetime.strptime(x, "%Y-%m-%d %H:%M:%S"))
 
         return data.to_dict("records")
 

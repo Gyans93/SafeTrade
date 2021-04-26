@@ -9,7 +9,8 @@ class MongoDB:
             self.client = MongoClient(mongoPath)
         except Exception as e:
             print(e)
-        self.db = self.client.Stocks
+        self.stockDB = self.client.Stocks
+        self.userDB = self.client.Users
 
     def getStockNames(self):
-        return self.db.list_collection_names()
+        return self.stockDB.list_collection_names()
